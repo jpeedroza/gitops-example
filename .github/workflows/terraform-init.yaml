@@ -44,4 +44,4 @@ jobs:
           name: plan-file
           path: plan.zip
       - name: Deploy the infra
-        uses: jpeedroza/gitops-example/.github/workflows/terraform-deploy.yml@${{ steps.extract_branch.outputs.branch }}
+        uses: ./.github/workflows/terraform-deploy.yml@develop
