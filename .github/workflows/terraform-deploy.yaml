@@ -26,6 +26,9 @@ jobs:
             .terraform.lock.hcl
             plan.cache
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
       - name: Terraform apply
         run: terraform apply -input=false -no-color -auto-approve plan.cache
 
@@ -51,6 +54,9 @@ jobs:
             .terraform.lock.hcl
             plan.cache
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
       - name: Terraform Plan
         id: plan
         run: terraform plan -destroy -no-color -out plan-destroy.cache
