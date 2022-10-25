@@ -30,8 +30,6 @@ jobs:
           path: |
             .terraform/**
             .terraform.lock.hcl
-            plan.cache
-            terraform.tfstate
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
       - name: Terraform Init
         id: init
