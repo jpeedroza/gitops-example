@@ -3,6 +3,9 @@ name: deploy
 on:
   workflow_call:
 
+env:
+  TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+
 jobs:
   apply:
     runs-on: ubuntu-latest

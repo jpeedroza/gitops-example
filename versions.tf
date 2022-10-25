@@ -2,9 +2,9 @@ terraform {
   required_version = "~> 1.3"
 
   required_providers {
-    local = {
-      source  = "hashicorp/local"
-      version = "~> 2.2.0"
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "~> 2.0"
     }
   }
 
@@ -14,4 +14,10 @@ terraform {
       name = "pipeline-test-dev"
     }
   }
+}
+
+variable "do_token" {}
+
+provider "digitalocean" {
+  token = var.do_token
 }
