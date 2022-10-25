@@ -44,4 +44,5 @@ jobs:
           name: plan-file
           path: plan.zip
   deploy:
+    needs: init
     uses: jpeedroza/gitops-example/.github/workflows/terraform-deploy.yaml@develop
