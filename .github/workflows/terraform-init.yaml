@@ -9,12 +9,11 @@ on:
       #- "!master"
   workflow_dispatch:
 
-env:
-  TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
-
 jobs:
   init:
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
@@ -24,7 +23,7 @@ jobs:
         continue-on-error: true
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | tr -d "[:space:]")"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - uses: actions/cache@v3
         with:

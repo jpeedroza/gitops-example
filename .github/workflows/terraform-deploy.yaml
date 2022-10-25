@@ -3,12 +3,11 @@ name: deploy
 on:
   workflow_call:
 
-env:
-  TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
-
 jobs:
   apply:
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
@@ -17,7 +16,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | tr -d "[:space:]")"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - uses: actions/cache@v3
         with:
@@ -26,9 +25,6 @@ jobs:
             .terraform.lock.hcl
             plan.cache
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
-      - name: Terraform Init
-        id: init
-        run: terraform init
       - name: Terraform apply
         run: terraform apply -input=false -no-color -auto-approve plan.cache
 
@@ -37,6 +33,8 @@ jobs:
     needs: apply
     environment:
       name: Destroy
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
@@ -45,7 +43,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | tr -d "[:space:]")"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - uses: actions/cache@v3
         with:
@@ -54,9 +52,6 @@ jobs:
             .terraform.lock.hcl
             plan.cache
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
-      - name: Terraform Init
-        id: init
-        run: terraform init
       - name: Terraform Plan
         id: plan
         run: terraform plan -destroy -no-color -out plan-destroy.cache
