@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+    environment:
+      name: Apply
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
