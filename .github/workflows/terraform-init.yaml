@@ -47,5 +47,5 @@ jobs:
           path: plan.zip
   deploy:
     needs: init
-    uses: ./.github/workflows/terraform-deploy.yaml@develop
+    uses: jpeedroza/gitops-example/.github/workflows/terraform-deploy.yaml@develop
     secrets: inherit
