@@ -43,5 +43,4 @@ jobs:
         with:
           name: plan-file
           path: plan.zip
-      - name: Deploy the infra
-        uses: jpeedroza/gitops-example/.github/workflows/terraform-deploy.yaml@develop
+      - uses: jpeedroza/gitops-example/.github/workflows/terraform-deploy.yaml@develop
