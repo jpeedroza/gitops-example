@@ -26,6 +26,7 @@ jobs:
             .terraform/**
             .terraform.lock.hcl
             plan.cache
+            terraform.tfstate
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
       - name: Terraform apply
         run: terraform apply -input=false -no-color -auto-approve plan.cache
@@ -53,6 +54,7 @@ jobs:
             .terraform/**
             .terraform.lock.hcl
             plan.cache
+            terraform.tfstate
           key: terraform-lock-${{ steps.extract_branch.outputs.branch }}
       - name: Terraform Plan
         id: plan
